@@ -1,0 +1,19 @@
+class Payout:     
+    # workers get paid $20 hourly so the function-
+    # below caluclates the amount they get paid per pay period
+      hourly_wage = 20.0               
+      def calculate_weekly_pay(hours_worked):
+          return hours_worked * hourly_wage
+            
+      # starts to compile the amount that the caregivers make
+      def pay_report(caregivers):
+          weekly_total = 0.0
+          monthly_total = 0.0
+          reported_hours_worked = []
+        
+          for caregiver, hours_worked in Caregivers.items():
+              weekly_pay = calculate_weekly_pay(hours_worked)
+              reported_hours_worked.append(f"{caregiver}: {hours_worked} hours worked this week, {weekly_pay: .2f} gross pay")
+              weekly_total += weekly_pay
+                
+              monthly_total = weekly_total * 4
