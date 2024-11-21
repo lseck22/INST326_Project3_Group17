@@ -1,0 +1,3 @@
+import calendar #allows for the calendar module to be accessed
+from datetime import datetime #allows us to work with the date and time if needed
+from collections import defaultdict #allows for default values 
