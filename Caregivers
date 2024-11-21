@@ -1,0 +1,17 @@
+#created caregivers own class
+class Caregivers:
+    #declared the attributes
+    def __init__(self, name, phone, email, pay_rate, hours=0):
+        self.name = name
+        self.phone = phone
+        self.email = email 
+        self.pay_rate = pay_rate
+        self.hours = hours
+        #sets the default availability to available as given in directions
+        self.availability = defaultdict(lambda: 'available')  #got this from 'https://www.geeksforgeeks.org/defaultdict-in-python/'
+
+    #function to get the caregiver's availability depending 
+    def get_availability(self, day, shift):
+        return self.availability[(shift,day)]
+  
+   
