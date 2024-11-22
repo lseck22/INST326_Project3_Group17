@@ -1,19 +1,50 @@
+hourly_wage = 20.0 
 class Payout:     
+                  
+    @staticmethod
+    def calculate_weekly_pay(hours_worked):
+        return hours_worked * hourly_wage
+
     # workers get paid $20 hourly so the function-
     # below caluclates the amount they get paid per pay period
-      hourly_wage = 20.0               
-      def calculate_weekly_pay(hours_worked):
-          return hours_worked * hourly_wage
-            
-      # starts to compile the amount that the caregivers make
-      def pay_report(caregivers):
-          weekly_total = 0.0
-          monthly_total = 0.0
-          reported_hours_worked = []
-        
-          for caregiver, hours_worked in Caregivers.items():
-              weekly_pay = calculate_weekly_pay(hours_worked)
-              reported_hours_worked.append(f"{caregiver}: {hours_worked} hours worked this week, {weekly_pay: .2f} gross pay")
-              weekly_total += weekly_pay
-                
-              monthly_total = weekly_total * 4
+    @staticmethod
+    def pay_report(caregivers):
+        weekly_total = 0.0
+        reported_hours_worked = []
+
+        for caregiver in caregivers:
+            weekly_pay = Payout.calculate_weekly_pay(caregiver.hours)
+            reported_hours_worked.append(f"{caregiver.name}: {caregiver.hours} hours worked this week, ${weekly_pay: .2f} gross pay")
+            weekly_total += weekly_pay
+
+        monthly_total = weekly_total * 4  # Assuming 4 weeks in a month
+        return reported_hours_worked, weekly_total, monthly_total
+
+# Example Usage
+# Creating instances of caregivers
+caregiver1 = Caregivers("Leanna", "525-354-1234", "leanna@gmail.com", 20.0)
+caregiver2 = Caregivers("Sesen", "123-444-5678", "sesen@gmail.com", 20.0)
+caregiver3 = Caregivers("Sebastain", "555-333-7777", "sebastian@gmail.com", 20.0)
+
+# Setting availability
+caregiver1.set_availability(1, "AM", "preferred")
+caregiver1.set_availability(1, "PM", "preferred")
+caregiver2.set_availability(2, "AM", "preferred")
+caregiver2.set_availability(2, "PM", "preferred")
+caregiver3.set_availability(3, "AM", "preferred")
+caregiver3.set_availability(3, "PM", "preferred")
+
+# Creating the schedule for November 2024
+schedule = Schedule(2024, 11, [caregiver1, caregiver2, caregiver3])
+schedule.make_shifts()
+
+# Displaying the schedule as HTML
+html_schedule = schedule.display_schedule_as_html()
+print(html_schedule)
+
+# Generating and displaying the pay report
+reported_hours, weekly_total, monthly_total = Payout.pay_report([caregiver1, caregiver2, caregiver3])
+for report in reported_hours:
+    print(report)
+print(f"Weekly Total: ${weekly_total: .2f}")
+print(f"Monthly Total: ${monthly_total: .2f}")
